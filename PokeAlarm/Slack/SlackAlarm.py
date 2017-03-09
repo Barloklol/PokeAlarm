@@ -53,7 +53,7 @@ class SlackAlarm(Alarm):
         # Service Info
         self.__api_key = settings['api_key']
         self.__startup_message = settings.get('startup_message', "True")
-        self.__channel = settings.get('channel', "general")
+        self.__channel = settings.get('channel', "testing")
         self.__map = settings.get('map', {})
         self.__startup_list = settings.get('startup_list', "True")
 
@@ -130,13 +130,13 @@ class SlackAlarm(Alarm):
             self.__channels[channel['name']] = channel['id']
         log.debug(self.__channels)
 
-    # Checks for valid channel, otherwise defaults to general
+    # Checks for valid channel, otherwise defaults to testing
     def get_channel(self, name):
         channel = SlackAlarm.channel_format(name)
         if channel not in self.__channels:
             if name == self.__channel:
-                log.error("Default channel %s not found... Posting to general instead." % channel)
-                return "#general"
+                log.error("Default channel %s not found... Posting to testing instead." % channel)
+                return "#testing"
             else:
                 log.debug("No channel created named %s... Reverting to default." % channel)
                 default = self.get_channel(self.__channel)
